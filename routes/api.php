@@ -18,20 +18,20 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-// List articles
-Route::get('articles', 'ArticleController@index');
+// // List articles
+// Route::get('articles', 'ArticleController@index');
 
-// List single articles
-Route::get('article/{id}', 'ArticleController@show');
+// // List single articles
+// Route::get('article/{id}', 'ArticleController@show');
 
-// Create new article
-Route::post('article', 'ArticleController@store');
+// // Create new article
+// Route::post('article', 'ArticleController@store');
 
-// Update article
-Route::put('article', 'ArticleController@store');
+// // Update article
+// Route::put('article', 'ArticleController@store');
 
-// Delete article
-Route::delete('article/{id}', 'ArticleController@destroy');
+// // Delete article
+// Route::delete('article/{id}', 'ArticleController@destroy');
 
 
 // List users

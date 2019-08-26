@@ -18,12 +18,13 @@ class User extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'email' =>$this->email,
-            'gender' =>$this->gender,
-            'address' =>$this->address,
-            'description' =>$this->description,
-            'user_type' =>$this->user_type,
-            'password' =>$this->password
+            'email' => $this->email,
+            'gender' => $this->gender,
+            'address' => $this->address,
+            'description' => $this->description,
+            'user_type' => $this->user_type,
+            'password' => $this->password,
+            'image' => $this->image,
         ];
     }
 }

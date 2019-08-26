@@ -8,6 +8,7 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 
+
 /**
  * The following block of code may be used to automatically register your
  * Vue components. It will recursively scan this directory for the Vue
@@ -24,7 +25,10 @@ window.Vue = require('vue');
 
 Vue.component('users', require('./components/Users.vue').default);
 Vue.component('profile', require('./components/Profile.vue').default);
+// Vue.component('usereditmodal', require('./components/UserEdit.vue').default);
 
+var SocialSharing = require('vue-social-sharing');
+Vue.use(SocialSharing);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

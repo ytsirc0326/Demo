@@ -15,14 +15,17 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Get Articles
-        $users = User::orderBy("created_at", "desc")->paginate(5);
+
+        $q = $request->has('search') ? $request->query('search') : null;
+
+        $users = User::search($q)->orderBy($request->query('sortKey'), $request->query('sortDir'))->paginate($request->query('displayPerPage'));
 
         // Return collection of users as resource
         return UserResource::collection($users);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -32,20 +35,31 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = $request->isMethod('put') ? User::findOrFail($request->user_id) : new User;
 
-        $password = $request->input('password');
-        if (Hash::check('plain-text', $password)) {
-            $password = Hash::make($request->input('password'));
+        $user = $request->input('id') ? User::findOrFail($request->input('id')) : new User;
+
+        $imgPath = $user->image;
+        $files = $request->file('image');
+        if ($files) {
+           $imgName = time()."_".$request->file('image')->getClientOriginalName();
+           $files->move('images/profile',$imgName);
+           $imgPath = 'images/profile/'.$imgName;
         }
 
-        $user->id = $request->input('user_id');
+        if ($request->input('password')) {
+            $password = Hash::make($request->input('password'));
+        } else {
+            $password = $user->password;
+        }
+
+        $user->id = $request->input('id');
         $user->name = $request->input('name');
         $user->email = $request->input('email');
         $user->password = $password;
         $user->gender = $request->input('gender');
         $user->address = $request->input('address');
         $user->description = $request->input('description');
+        $user->image = $imgPath;
 
         if ($user->save()) {
            return new UserResource($user);

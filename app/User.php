@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'gender','address','description'
+        'name', 'email', 'password', 'gender', 'address', 'description', 'image'
     ];
 
     /**
@@ -36,4 +36,18 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopeSearch($query, $q) {
+        if ($q == null) {
+            return $query;
+        }
+
+        return $query
+            ->where('name', 'LIKE', "%{$q}%")
+            ->orWhere('email', 'LIKE', "%{$q}%")
+            ->orWhere('gender', 'LIKE', "%{$q}%")
+            ->orWhere('address', 'LIKE', "%{$q}%")
+            ->orWhere('description', 'LIKE', "%{$q}%");
+    }
+
 }
